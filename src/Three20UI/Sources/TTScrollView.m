@@ -50,6 +50,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
 @synthesize centerPageIndex = _centerPageIndex;
 @synthesize pageSpacing     = _pageSpacing;
 @synthesize scrollEnabled   = _scrollEnabled;
+@synthesize verticalScrollEnabled = _verticalScrollEnabled;
 @synthesize zoomEnabled     = _zoomEnabled;
 @synthesize rotateEnabled   = _rotateEnabled;
 @synthesize orientation     = _orientation;
@@ -78,6 +79,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
     _pageSpacing = kDefaultPageSpacing;
     _visiblePageIndex = kInvalidIndex;
     _scrollEnabled = YES;
+	  _verticalScrollEnabled = NO;
     _zoomEnabled = YES;
     _rotateEnabled = YES;
     _orientation = UIDeviceOrientationPortrait;
@@ -1345,6 +1347,16 @@ static const CGFloat kFrameDuration = 1.0/40.0;
     CGFloat right = _pageStartEdges.right + (edges.right - _touchStartEdges.right);
     CGFloat top = _pageEdges.top;
     CGFloat bottom = _pageEdges.bottom;
+	  
+	  // vertical scroll
+	  if (_verticalScrollEnabled) {
+		  if (abs(edges.top-_touchStartEdges.bottom)>abs(edges.left-_touchStartEdges.right)) {
+			  left = _pageEdges.left;
+			  right = _pageEdges.right;
+			  top = _pageStartEdges.top + (edges.top-_touchStartEdges.top);
+			  bottom = _pageStartEdges.bottom + (edges.bottom-_touchStartEdges.bottom);
+		  }
+	  }
 
     // Drag when is zoomed correct bottom and top.
     if ((_touchCount == 2 || self.zoomed) && _zoomEnabled && !_holding) {

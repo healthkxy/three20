@@ -24,6 +24,7 @@
   NSInteger       _centerPageIndex;
   NSInteger       _visiblePageIndex;
   BOOL            _scrollEnabled;
+	BOOL		  _verticalScrollEnabled;
   BOOL            _zoomEnabled;
   BOOL            _rotateEnabled;
   CGFloat         _pageSpacing;
@@ -121,6 +122,11 @@
  * @default YES
  */
 @property (nonatomic) BOOL scrollEnabled;
+
+/**
+ * @default NO
+ */
+@property (nonatomic) BOOL verticalScrollEnabled;
 
 /**
  * @default YES
