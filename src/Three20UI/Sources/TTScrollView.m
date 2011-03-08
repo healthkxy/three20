@@ -1348,6 +1348,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
     CGFloat top = _pageEdges.top;
     CGFloat bottom = _pageEdges.bottom;
 	  
+	  _bIsVerticalScroll = NO;
 	  // vertical scroll
 	  if (_verticalScrollEnabled) {
 		  if (abs(edges.top-_touchStartEdges.bottom)>abs(edges.left-_touchStartEdges.right)) {
@@ -1355,6 +1356,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
 			  right = _pageEdges.right;
 			  top = _pageStartEdges.top + (edges.top-_touchStartEdges.top);
 			  bottom = _pageStartEdges.bottom + (edges.bottom-_touchStartEdges.bottom);
+			  _bIsVerticalScroll = YES;
 		  }
 	  }
 

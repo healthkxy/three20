@@ -25,6 +25,7 @@
   NSInteger       _visiblePageIndex;
   BOOL            _scrollEnabled;
 	BOOL		  _verticalScrollEnabled;
+	BOOL		_bIsVerticalScroll;
   BOOL            _zoomEnabled;
   BOOL            _rotateEnabled;
   CGFloat         _pageSpacing;
