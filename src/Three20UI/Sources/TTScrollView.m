@@ -1,5 +1,5 @@
 //
-// Copyright 2009-2010 Facebook
+// Copyright 2009-2011 Facebook
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -168,16 +168,21 @@ static const CGFloat kFrameDuration = 1.0/40.0;
   if (!self.flipped) {
     if (_pageEdges.left > kFlickThreshold && ![self isFirstPage]) {
       return YES;
+
     } else if (_pageEdges.right < -kFlickThreshold && ![self isLastPage]) {
       return YES;
+
     } else {
       return NO;
     }
+
   } else {
     if (_pageEdges.left > kFlickThreshold && ![self isLastPage]) {
       return YES;
+
     } else if (_pageEdges.right < -kFlickThreshold && ![self isFirstPage]) {
       return YES;
+
     } else {
       return NO;
     }
@@ -189,6 +194,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
 - (CGFloat)pageWidth {
   if (UIInterfaceOrientationIsLandscape(_orientation)) {
     return self.height;
+
   } else {
     return self.width;
   }
@@ -199,6 +205,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
 - (CGFloat)pageHeight {
   if (UIInterfaceOrientationIsLandscape(_orientation)) {
     return self.width;
+
   } else {
     return self.height;
   }
@@ -234,6 +241,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
     if (0 == size.width || 0 == size.height) {
       size = CGSizeMake(self.pageWidth, self.pageHeight);
     }
+
   } else {
     size = CGSizeMake(self.pageWidth, self.pageHeight);
   }
@@ -243,14 +251,17 @@ static const CGFloat kFrameDuration = 1.0/40.0;
     if (size.width / size.height > self.width / self.height) {
       height = self.height;
       width = size.height/size.width * self.height;
+
     } else {
       height = size.width/size.height * self.width;
       width = self.width;
     }
+
   } else {
     if (size.width / size.height > self.width / self.height) {
       width = self.width;
       height = size.height/size.width * self.width;
+
     } else {
       width = size.width/size.height * self.height;
       height = self.height;
@@ -267,6 +278,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
 - (CGFloat)overflowForFrame:(CGRect)frame {
   if (UIInterfaceOrientationIsLandscape(_orientation)) {
     return frame.origin.y < 0 ? fabs(frame.origin.y) : 0;
+
   } else {
     return frame.origin.x < 0 ? fabs(frame.origin.x) : 0;
   }
@@ -277,6 +289,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
 - (CGPoint)offsetForOrientation:(CGFloat)x y:(CGFloat)y {
   if (UIInterfaceOrientationIsLandscape(_orientation)) {
     return CGPointMake(y, x);
+
   } else {
     return CGPointMake(x, y);
   }
@@ -302,10 +315,13 @@ static const CGFloat kFrameDuration = 1.0/40.0;
 - (CGAffineTransform)rotateTransform:(CGAffineTransform)transform {
   if (_orientation == UIInterfaceOrientationLandscapeLeft) {
     return CGAffineTransformRotate(transform, M_PI*1.5);
+
   } else if (_orientation == UIInterfaceOrientationLandscapeRight) {
     return CGAffineTransformRotate(transform, M_PI/2);
+
   } else if (_orientation == UIInterfaceOrientationPortraitUpsideDown) {
     return CGAffineTransformRotate(transform, -M_PI);
+
   } else {
     return transform;
   }
@@ -321,6 +337,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
   CGPoint point = [touch locationInView:self];
   if (UIInterfaceOrientationIsLandscape(_orientation)) {
     return CGPointMake(point.y, point.x);
+
   } else {
     return point;
   }
@@ -361,8 +378,10 @@ static const CGFloat kFrameDuration = 1.0/40.0;
   } else if (!self.flipped) {
     if (_pageEdges.left > kFlickThreshold && ![self isFirstPage]) {
       return _centerPageIndex - 1;
+
     } else if (_pageEdges.right < -kFlickThreshold && ![self isLastPage]) {
       return _centerPageIndex + 1;
+
     } else {
       return _centerPageIndex;
     }
@@ -370,8 +389,10 @@ static const CGFloat kFrameDuration = 1.0/40.0;
   } else {
     if (_pageEdges.left > kFlickThreshold && ![self isLastPage]) {
       return _centerPageIndex + 1;
+
     } else if (_pageEdges.right < -kFlickThreshold && ![self isFirstPage]) {
       return _centerPageIndex - 1;
+
     } else {
       return _centerPageIndex;
     }
@@ -394,6 +415,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
       page.userInteractionEnabled = YES;
       [self addSubview:page];
       [_pages replaceObjectAtIndex:arrayIndex withObject:page];
+
     } else {
       return nil;
     }
@@ -469,6 +491,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
     _pageEdges = _pageStartEdges = UIEdgeInsetsZero;
     _zooming = NO;
     [self setNeedsLayout];
+
   } else if (pageIndex != _centerPageIndex) {
     [self adjustPageEdgesForPageAtIndex:pageIndex];
     _zooming = NO;
@@ -483,6 +506,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
         for (int i = edgeIndex; i < newEdgeIndex; ++i) {
           [self enqueuePageAtIndex:i];
         }
+
       } else if (indexDiff < 0) {
         NSInteger edgeIndex = _centerPageIndex + kOffscreenPages;
         NSInteger newEdgeIndex = pageIndex + kOffscreenPages;
@@ -490,6 +514,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
           [self enqueuePageAtIndex:i];
         }
       }
+
     } else {
       [self reloadData];
     }
@@ -611,6 +636,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
 - (UIEdgeInsets)squareTouchEdges:(UIEdgeInsets)edges {
   //if (_touchCount == 1) {
     return edges;
+
   //} else {
   // ********
   //
@@ -652,6 +678,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
   if (edges.left > 0) {
     edges.right += edges.left;
     edges.left = 0;
+
   } else if (edges.right < 0) {
     edges.left += -edges.right;
     edges.right = 0;
@@ -660,6 +687,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
   if (edges.top > 0) {
     edges.bottom += edges.top;
     edges.top = 0;
+
   } else if (edges.bottom < 0) {
     edges.top += -edges.bottom;
     edges.bottom = 0;
@@ -725,6 +753,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
         top = [self resist:_pageEdges.top to:top max:height];
         if (_touchCount == 2) {
           bottom = bottom + (top - _pageEdges.top);
+
         } else {
           bottom = _pageEdges.bottom + (top - _pageEdges.top);
         }
@@ -739,6 +768,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
         bottom = [self resist:_pageEdges.bottom to:bottom max:height];
         if (_touchCount == 2) {
           top = top + (bottom - _pageEdges.bottom);
+
         } else {
           top = _pageEdges.top + (bottom - _pageEdges.bottom);
         }
@@ -758,6 +788,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
       left = [self resist:_pageEdges.left to:left max:width];
       if (_touchCount == 2) {
         right = right + (left - _pageEdges.left);
+
       } else {
         right = _pageEdges.right + (left - _pageEdges.left);
       }
@@ -767,10 +798,12 @@ static const CGFloat kFrameDuration = 1.0/40.0;
       CGFloat yd = newHeight - (-top + height + bottom);
       top -= yd/2;
       bottom += yd/2;
+
     } else if (flickNext && [self isLastPage] && !self.zoomed) {
       right = [self resist:_pageEdges.right to:right max:width];
       if (_touchCount == 2) {
         left = left + (right - _pageEdges.right);
+
       } else {
         left = _pageEdges.left + (right - _pageEdges.right);
       }
@@ -806,16 +839,19 @@ static const CGFloat kFrameDuration = 1.0/40.0;
       if (fabs(_pageStartEdges.left) >= fabs(_pageEdges.right)) {
         left = right = -((self.pageWidth + _pageSpacing)
                          + _pageEdges.right + _overshoot + overflow);
+
       } else {
         left = right = -((self.pageWidth + _pageSpacing)
                          + _pageEdges.left + _overshoot + overflow);
       }
+
     } else {
       CGRect frame = [self frameOfPageAtIndex:_centerPageIndex + (self.flipped ? 1 : -1)];
       CGFloat overflow = centerPageOverflow + [self overflowForFrame:frame];
       if (fabs(_pageEdges.left) >= fabs(_pageEdges.right)) {
         left = right = ((self.pageWidth + _pageSpacing)
                         - _pageEdges.right + _overshoot + overflow);
+
       } else {
         left = right = ((self.pageWidth + _pageSpacing)
                         - _pageEdges.left + _overshoot + overflow);
@@ -825,12 +861,14 @@ static const CGFloat kFrameDuration = 1.0/40.0;
   } else {
     if (_pageEdges.left > 0) {
       left = right = -_pageEdges.left;
+
     } else if (_pageEdges.right < 0) {
       left = right = -_pageEdges.right;
     }
 
     if (_pageEdges.top > 0) {
       top = bottom = -_pageEdges.top;
+
     } else if (_pageEdges.bottom < 0) {
       top = bottom = -_pageEdges.bottom;
     }
@@ -1013,7 +1051,8 @@ static const CGFloat kFrameDuration = 1.0/40.0;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (CGFloat)tween:(NSTimeInterval)t b:(NSTimeInterval)b c:(NSTimeInterval)c d:(NSTimeInterval)d {
-  return c*((t=t/d-1)*t*t + 1) + b;
+  t = t/d-1;
+  return c*(t*t*t + 1) + b;
 }
 
 
@@ -1240,7 +1279,10 @@ static const CGFloat kFrameDuration = 1.0/40.0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// Solution for the issue discussed here: http://discussions.apple.com/message.jspa?messageID=7139722
+/**
+ * Solution for the issue discussed here:
+ * http://discussions.apple.com/message.jspa?messageID=7139722
+ */
 - (void) ensureTouches {
   if (_touch1.phase == UITouchPhaseEnded) {
     [self removeTouch: _touch1];
@@ -1263,8 +1305,6 @@ static const CGFloat kFrameDuration = 1.0/40.0;
   [super touchesBegan:touches withEvent:event];
 
   [self ensureTouches];
-  NSLog( @"_touchCount: %i", _touchCount );
-  NSLog( @"touches count: %i", [touches count] );
 
   if (_touchCount < 2) {
     [self stopAnimation:NO];
@@ -1339,8 +1379,8 @@ static const CGFloat kFrameDuration = 1.0/40.0;
     }
 
     // Declare common.
-    UIEdgeInsets pageEdges;
-    UIEdgeInsets newEdges;
+    UIEdgeInsets pageEdges = UIEdgeInsetsZero;
+    UIEdgeInsets newEdges = UIEdgeInsetsZero;
 
     UIEdgeInsets edges = [self squareTouchEdges:_touchEdges];
     CGFloat left = _pageStartEdges.left + (edges.left - _touchStartEdges.left);
@@ -1374,6 +1414,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
       _executingZoomGesture = YES;
 
     // Dragging.
+
     } else if ( _touchCount == 1 ) {
       newEdges  = UIEdgeInsetsMake(top, left, bottom, right);
       pageEdges = [self resistPageEdges:newEdges];
@@ -1446,6 +1487,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
           [self startTapTimer:touch];
 
         // Double tap, zoom out to fit or zoom in to the 1/3 of the maximum scale.
+
         } else if (touch.tapCount == 2 && self.canZoom) {
           CGPoint pointToZoom = [self touchLocation:touch];
 
@@ -1630,6 +1672,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
       [UIView setAnimationDidStopSelector:@selector(rotationDidStop)];
       [self layoutPage];
       [UIView commitAnimations];
+
     } else {
       [self rotationDidStop];
       [self setNeedsLayout];
@@ -1644,6 +1687,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
     UIView* page = [[_pageQueue.lastObject retain] autorelease];
     [_pageQueue removeLastObject];
     return page;
+
   } else {
     return nil;
   }
@@ -1671,15 +1715,19 @@ static const CGFloat kFrameDuration = 1.0/40.0;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// A floating-point value that specifies the current scale factor applied to the scroll
-// view's content.
+/**
+ * A floating-point value that specifies the current scale factor applied to the scroll
+ * view's content.
+ */
 -(CGFloat)zoomScale {
   return self.zoomFactor;
 }
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// A floating-point value that specifies the current zoom scale.
+/**
+ * A floating-point value that specifies the current zoom scale.
+ */
 -(void)setZoomScale:(CGFloat)scale {
   [self setZoomScale:scale animated:YES];
 }
