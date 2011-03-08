@@ -97,4 +97,5 @@
  */
 - (void)endHighlightItem:(TTLauncherItem*)item;
 
+- (void)layoutButtons;
 @end
