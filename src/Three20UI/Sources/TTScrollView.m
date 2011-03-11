@@ -68,7 +68,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (id)initWithFrame:(CGRect)frame {
-  if (self = [super initWithFrame:frame]) {
+  if ((self = [super initWithFrame:frame])) {
     self.clipsToBounds = YES;
     self.multipleTouchEnabled = YES;
     self.userInteractionEnabled = YES;
@@ -1387,18 +1387,18 @@ static const CGFloat kFrameDuration = 1.0/40.0;
     CGFloat right = _pageStartEdges.right + (edges.right - _touchStartEdges.right);
     CGFloat top = _pageEdges.top;
     CGFloat bottom = _pageEdges.bottom;
-	  
     _bIsVerticalScroll = NO;
+
     // vertical scroll
     if (_verticalScrollEnabled) {
-    if (abs(edges.top-_touchStartEdges.bottom)>abs(edges.left-_touchStartEdges.right)) {
-			  left = _pageEdges.left;
-			  right = _pageEdges.right;
-			  top = _pageStartEdges.top + (edges.top-_touchStartEdges.top);
-			  bottom = _pageStartEdges.bottom + (edges.bottom-_touchStartEdges.bottom);
-			  _bIsVerticalScroll = YES;
-		  }
-	  }
+        if (abs(edges.top-_touchStartEdges.bottom)>abs(edges.left-_touchStartEdges.right)) {
+            left = _pageEdges.left;
+            right = _pageEdges.right;
+            top = _pageStartEdges.top + (edges.top-_touchStartEdges.top);
+            bottom = _pageStartEdges.bottom + (edges.bottom-_touchStartEdges.bottom);
+            _bIsVerticalScroll = YES;
+        }
+    }
 
     // Drag when is zoomed correct bottom and top.
     if ((_touchCount == 2 || self.zoomed) && _zoomEnabled && !_holding) {
