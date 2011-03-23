@@ -162,30 +162,56 @@ static const CGFloat kFrameDuration = 1.0/40.0;
       || _pageEdges.right < 0 || _pageEdges.bottom < 0;
 }
 
+-(BOOL)verticalFlicked {
+    if (!self.flipped) {
+        if(_bIsVerticalScroll){
+            if (_pageEdges.top > kFlickThreshold) {
+                return YES;
+            
+            } else if (_pageEdges.bottom < -kFlickThreshold) {
+                return YES;
+            
+            } else {
+                return NO;
+            }
+        }
+    }else{
+        if(_bIsVerticalScroll){
+            if (_pageEdges.top > kFlickThreshold) {
+                return YES;
+                
+            } else if (_pageEdges.right < -kFlickThreshold) {
+                return YES;
+                
+            } else {
+                return NO;
+            }
+        }
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (BOOL)flicked {
   if (!self.flipped) {
-    if (_pageEdges.left > kFlickThreshold && ![self isFirstPage]) {
-      return YES;
+          if (_pageEdges.left > kFlickThreshold && ![self isFirstPage]) {
+              return YES;
 
-    } else if (_pageEdges.right < -kFlickThreshold && ![self isLastPage]) {
-      return YES;
+          } else if (_pageEdges.right < -kFlickThreshold && ![self isLastPage]) {
+              return YES;
 
-    } else {
-      return NO;
-    }
-
+          } else {
+              return NO;
+          }
   } else {
-    if (_pageEdges.left > kFlickThreshold && ![self isLastPage]) {
-      return YES;
+          if (_pageEdges.left > kFlickThreshold && ![self isLastPage]) {
+              return YES;
 
-    } else if (_pageEdges.right < -kFlickThreshold && ![self isFirstPage]) {
-      return YES;
+          } else if (_pageEdges.right < -kFlickThreshold && ![self isFirstPage]) {
+              return YES;
 
-    } else {
-      return NO;
-    }
+          } else {
+              return NO;
+          }
   }
 }
 
@@ -1454,6 +1480,7 @@ static const CGFloat kFrameDuration = 1.0/40.0;
     _pageEdges = UIEdgeInsetsZero;
     [self setNeedsLayout];
   }
+    _bIsVerticalScroll = NO;
 }
 
 
@@ -1547,13 +1574,15 @@ static const CGFloat kFrameDuration = 1.0/40.0;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 - (void)layoutSubviews {
-  [self layoutPage];
-  [self layoutAdjacentPages];
+    [self layoutPage];
+    [self layoutAdjacentPages];
 
-  if (_visiblePageIndex != _centerPageIndex && self.centerPage) {
-    _visiblePageIndex = _centerPageIndex;
-    [_delegate scrollView:self didMoveToPageAtIndex:_centerPageIndex];
-  }
+    if (_visiblePageIndex != _centerPageIndex && self.centerPage) {
+        _visiblePageIndex = _centerPageIndex;
+        [_delegate scrollView:self didMoveToPageAtIndex:_centerPageIndex];
+        NSLog(@"didMoveToPageAtIndex");
+    }
+
 }
 
 
